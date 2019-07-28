@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <title>某特區政府新聞公報產生器</title>
+    </head>
+    <body onload="onLoad()">
+        <input id="month" type="text" placeholder="事發月份" value="七"/>
+        <input id="day" type="text" placeholder="事發日" value="二十八"/>
+        <input id="time" type="text" placeholder="事發時段" value="下午"/><br>
+        <input id="area" type="text" placeholder="事發區域" value="港島"/>
+        <input id="place" type="text" placeholder="事發地名" value="銅鑼灣"/>
+        <input id="b" type="button" value="譴責" onclick="onClick()"><br>
+        <p>
+            <font id="content_title">政府回應<font class="content_area">＜事發區域＞</font>區示威活動</font><br>
+            <font id="content_stars"></font>
+        </p>
+        <p>
+            　　就近日（<font class="content_month">＜事發月份＞</font>月<font class="content_day">＜事發日＞</font>日）在<font class="content_area">＜事發區域＞</font>區的示威活動，政府發言人作以下回應：
+        </p>
+        <p>
+            　　昨天自<font class="content_time">＜事發時段＞</font>開始有市民在<font class="content_area">＜事發區域＞</font>區進行示威活動，其中在<font class="content_place">＜事發地名＞</font>一帶有激進示威者作出暴力行為，對警務人員以至其他市民構成危險。激進示威者目無法紀，以暴力破壞社會安寧，我們予以強烈譴責，會繼續全力支持警隊嚴正執法，遏止所有暴力行為，盡快回復社會秩序。
+        </p>
+        <p>
+            　　此外，<font class="content_area">＜事發區域＞</font>區有市民佔據馬路，更有人破壞公物，設置路障阻塞交通，嚴重影響公共服務。該等行為不但違法，亦對其他市民造成不便，我們對此表示遺憾，並再次呼籲市民表達意見時應和平理性，不應以身試法。 
+        </p>
+        <p>
+            完<br>
+            <font id="date_y">...</font>年<font id="date_m">...</font>月<font id="date_d">...</font>日（星期<font id="date_day">...</font>）<br>
+            香港時間<font id="time_h">...</font>時<font id="time_m">...</font>分
+        </p>
+    </body>
+    <script>
+        var content_month = document.getElementsByClassName("content_month");
+        var content_day = document.getElementsByClassName("content_day");
+        var content_time = document.getElementsByClassName("content_time");
+        var content_area = document.getElementsByClassName("content_area");
+        var content_place = document.getElementsByClassName("content_place");
+        
+        function trans(month, day, time, area, place) {
+            for (var i=0; i<content_month.length; i++) content_month[i].innerText = month;
+            for (var i=0; i<content_day.length; i++) content_day[i].innerText = day;
+            for (var i=0; i<content_time.length; i++) content_time[i].innerText = time;
+            for (var i=0; i<content_area.length; i++) content_area[i].innerText = area;
+            for (var i=0; i<content_place.length; i++) content_place[i].innerText = place;
+        }
+        
+        function stars() {
+            document.getElementById("content_stars").innerText = "＊".repeat(document.getElementById("content_title").innerText.length);
+        }
+        
+        function datetime() {
+            var today = new Date();
+            document.getElementById("date_y").innerText = today.getFullYear();
+            document.getElementById("date_m").innerText = String(today.getMonth()+1);
+            document.getElementById("date_d").innerText = String(today.getDate());
+            document.getElementById("time_h").innerText = String(today.getHours());
+            document.getElementById("time_m").innerText = String(today.getMinutes());
+            
+            var dow = String(today.getDay()); // Day of week
+            var week = ["日", "一", "二", "三", "四", "五", "六"];
+            document.getElementById("date_day").innerText = week[dow];
+        }
+        
+        function onLoad() {
+            var month = document.getElementById("month").value;
+            var day = document.getElementById("day").value;
+            var time = document.getElementById("time").value;
+            var area = document.getElementById("area").value;
+            var place = document.getElementById("place").value;
+            trans(month, day, time, area, place);
+            stars();
+            datetime();
+        }
+        
+        function onClick() {
+            var month = document.getElementById("month").value;
+            var day = document.getElementById("day").value;
+            var time = document.getElementById("time").value;
+            var area = document.getElementById("area").value;
+            var place = document.getElementById("place").value;
+            if (
+                month.length > 0 &&
+                day.length > 0 &&
+                time.length > 0 &&
+                area.length > 0 &&
+                place.length > 0
+            ) {
+                trans(month, day, time, area, place);
+                onLoad();
+            }
+            else {
+                if (month.length == 0) window.alert("請輸入事發月份。");
+                else if (day.length == 0) window.alert("請輸入事發日。");
+                else if (time.length == 0) window.alert("請輸入事發時段。");
+                else if (area.length == 0) window.alert("請輸入事發區域。");
+                else window.alert("請輸入事發地名。");
+            }
+        }
+    </script>
+</html>
+
